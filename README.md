@@ -4,7 +4,7 @@
 
 No clicks. No hotkeys. Just works.
 
-> 📹 _[Demo video coming soon]_
+<img width="800" height="450" alt="Image" src="https://github.com/user-attachments/assets/81676417-8a5c-44b8-8fd6-4c25982f0a35" />
 
 ---
 
