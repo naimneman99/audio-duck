@@ -1,0 +1,17 @@
+[Unit]
+Description=Automatic audio ducking daemon
+Documentation=https://github.com/naimneman99/audio-duck
+After=pipewire-pulse.service pulseaudio.service
+Wants=pipewire-pulse.service
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/audio-duck.py
+Restart=on-failure
+RestartSec=3
+
+# Optional: tune duck level and poll rate here
+# ExecStart=%h/.local/bin/audio-duck.py --duck-level 0.333 --poll 0.3
+
+[Install]
+WantedBy=default.target
