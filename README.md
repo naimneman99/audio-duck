@@ -28,9 +28,9 @@ sudo apt install pulseaudio-utils
 Clone the repo and make the script executable:
 
 ```bash
-git clone https://github.com/naimneman99/audio-duck.git
-cd audio-duck
-chmod +x audio_duck.py
+git clone https://github.com/naimneman99/audio-duck.git ~/.local/share/audio-duck
+cd ~/.local/share/audio-duck
+chmod +x audio-duck.py
 ```
 
 That's enough to run it.
@@ -38,9 +38,8 @@ That's enough to run it.
 To have it start automatically with your session, install as a systemd user service:
 
 ```bash
-mkdir -p ~/.local/bin ~/.config/systemd/user \
-  && ln -s "$(pwd)/audio_duck.py" ~/.local/bin/audio-duck.py \
-  && cp audio-duck.service ~/.config/systemd/user/ \
+ln -s ~/.local/share/audio-duck/audio-duck.py ~/.local/bin/audio-duck.py \
+  && cp ~/.local/share/audio-duck/audio-duck.service ~/.config/systemd/user/ \
   && systemctl --user daemon-reload \
   && systemctl --user enable --now audio-duck
 ```
@@ -58,14 +57,14 @@ journalctl --user -u audio-duck -f     # confirm it's working
 Or run it directly without the service:
 
 ```bash
-./audio_duck.py
+./audio-duck.py
 ```
 
 ---
 
 ## Config
 
-AudioDuck uses two app lists in `audio_duck.py` — `BACKGROUND_APPS` (gets ducked) and `FOREGROUND_APPS` (triggers ducking). Apps not in either list are ignored.
+AudioDuck uses two app lists in `audio-duck.py` — `BACKGROUND_APPS` (gets ducked) and `FOREGROUND_APPS` (triggers ducking). Apps not in either list are ignored.
 
 ### Change duck volume or polling rate
 
