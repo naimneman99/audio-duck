@@ -26,6 +26,7 @@ import subprocess
 import time
 import json
 import sys
+import signal
 import argparse
 import logging
 from dataclasses import dataclass
@@ -267,6 +268,16 @@ def main() -> None:
     # ducked_to:     exact volume we set — used as from_vol for restore fade
     #                avoids reading si.volume mid-fade which causes drift
     state: dict[int, tuple[str, float, float]] = {}
+
+    def _on_signal(signum, frame):
+        log.info(f"Received signal {signum} — restoring all ducked inputs...")
+        for idx, (st, saved_volume, _) in state.items():
+            if st == "ducked":
+                set_volume(idx, saved_volume)
+        sys.exit(0)
+
+    signal.signal(signal.SIGTERM, _on_signal)
+    signal.signal(signal.SIGHUP, _on_signal)
 
     log.info(f"Daemon started  duck_ratio={duck_ratio:.0%}  poll={poll_interval}s")
 
